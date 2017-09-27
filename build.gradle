@@ -1,0 +1,20 @@
+group 'com.github.jajanjawa'
+version '0.1.0'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.slf4j:slf4j-api:$slf4j"
+    compile "com.google.code.gson:gson:$gson"
+    compile "io.socket:socket.io-client:$socketio"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
