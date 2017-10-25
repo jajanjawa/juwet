@@ -16,5 +16,7 @@ dependencies {
     compile "org.slf4j:slf4j-api:$slf4j"
     compile "com.google.code.gson:gson:$gson"
     compile "io.socket:socket.io-client:$socketio"
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile "org.slf4j:slf4j-simple:$slf4j"
 }
