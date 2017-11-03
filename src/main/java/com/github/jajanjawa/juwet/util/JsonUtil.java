@@ -8,7 +8,6 @@ public class JsonUtil {
 
     static {
         gson = new GsonBuilder()
-
                 .create();
     }
 }
