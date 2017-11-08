@@ -4,18 +4,28 @@
 RPC diatas [NowDB Relay](http://nowdb.net)
 
 ### Keunggulan
-Menggunakan **room id** bukan **public ip**
-
+* Menggunakan **room id** bukan **public ip**
 
 ### Catatan
 * Berbasis String, menggunakan banyak data.
-* Room dari NowDB bersifat public, siapapun yang tahu room id, bisa dengarkan pesan.
+
+### Gradle
+```groovy
+repositories {
+    jcenter()
+    maven { url 'https://jitpack.io' }
+}
+dependencies {
+    compile "com.github.jajanjawa:juwet:$juwetVersion"
+}
+```
 
 ### Membuat modul interface
 diperlukan oleh server maupun klien.
 ```java
 public interface CoreApi {
-    String salam();
+    String NAME = "core"; // buat nama modul yang unik
+    String salam(String name);
 }
 ```
 
@@ -25,12 +35,12 @@ public interface CoreApi {
 public class CoreModule implements CoreApi, JuwetModule {
    @Override
    public String name() {
-       return "core"; // buat nama yang unik
+       return CoreApi.NAME;
    } 
    
    @Override
-   public String salam() {
-        return "As Salamu Alaikum";
+   public String salam(String name) {
+        return "Halo " + name;
    }
 }
 ```
@@ -52,14 +62,14 @@ public class Client {
     
     public Client() {
         juwet = new Juwet("aiueo", "aa iu eo"); // minimal pakai 2 room
-        coreApi = juwet.create("core", CoreApi.class, this);
+        coreApi = juwet.create(CoreApi.NAME, CoreApi.class, this);
     }
     
     /**
     * Dipanggil oleh user sendiri
     */
     public void doSalam() {
-        coreApi.salam();
+        coreApi.salam("Budi");
     }
     
     /**
@@ -68,6 +78,7 @@ public class Client {
     */
     public void salam(String salam) {
         System.out.println(salam);
+        
         // sampai disini ada waktunya perlu pindah Thread.
         // Platform.runLater atau activity.runOnUiThread
     }

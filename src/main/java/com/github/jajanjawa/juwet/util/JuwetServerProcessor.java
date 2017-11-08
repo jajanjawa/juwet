@@ -23,7 +23,7 @@ public class JuwetServerProcessor extends JuwetProcessor {
         connection.listen();
     }
 
-    public List<String> listModule() {
+    public List<String> listModules() {
         ArrayList<String> list = new ArrayList<String>();
         for (String module : executorMap.keySet()) {
             list.add(module);
@@ -31,7 +31,7 @@ public class JuwetServerProcessor extends JuwetProcessor {
         return list;
     }
 
-    private void sendActionResult(PacketReader reader, Object result) {
+    private void sendActionResult(Object result, PacketReader reader) {
         Packet packet = reader.createPacket();
 
         Action action = reader.createAction();
@@ -80,7 +80,7 @@ public class JuwetServerProcessor extends JuwetProcessor {
             JuwetExecutor executor = getExecutor(module);
             Object result = executor.run(reader.getMethod(), reader.getParameters());
             if (result != null) {
-                sendActionResult(reader, result);
+                sendActionResult(result, reader);
             }
         } catch (java.lang.Exception e) {
             logger.debug("terjadi kesalahan saat kirim balasan", e);

@@ -1,7 +1,5 @@
 package com.github.jajanjawa.juwet.wire;
 
-import com.github.jajanjawa.juwet.util.JsonUtil;
-
 import java.lang.reflect.Method;
 
 /**
@@ -71,7 +69,7 @@ public class Action {
     }
 
     /**
-     * Tambah parameter harus gunakan method ini.
+     * Tambah parameter.
      *
      * @param o parameter yang digunakan untuk panggil method
      */
@@ -79,8 +77,6 @@ public class Action {
         if (parameters == null) {
             parameters = new Parameters();
         }
-        // TODO: 02/11/17 tanpa konversi ke String
-//        String json = JsonUtil.gson.toJson(o);
         parameters.add(o);
     }
 
