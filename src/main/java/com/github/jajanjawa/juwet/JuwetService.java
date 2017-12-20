@@ -1,10 +1,10 @@
 package com.github.jajanjawa.juwet;
 
-import com.github.jajanjawa.juwet.util.JuwetServerProcessor;
+import com.github.jajanjawa.juwet.util.JuwetServerMessageProcessor;
 
 public class JuwetService {
 
-    private final JuwetServerProcessor serverProcessor;
+    private final JuwetServerMessageProcessor messageProcessor;
     private final JuwetConnection connection;
 
 
@@ -13,16 +13,17 @@ public class JuwetService {
      */
     public JuwetService(String id) {
         connection = new JuwetConnection(id);
-        serverProcessor = new JuwetServerProcessor(this, connection);
+        messageProcessor = new JuwetServerMessageProcessor(this, connection);
 
         connection.connect();
     }
 
-    public JuwetServerProcessor getServerProcessor() {
-        return serverProcessor;
+    public JuwetServerMessageProcessor getMessageProcessor() {
+        return messageProcessor;
     }
 
     public void handle(JuwetModule module) {
-        serverProcessor.mapModule(module.name(), module);
+        messageProcessor.mapModule(module.name(), module);
     }
+
 }

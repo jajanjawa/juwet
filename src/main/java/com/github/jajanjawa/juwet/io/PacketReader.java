@@ -4,12 +4,9 @@ import com.github.jajanjawa.juwet.util.JsonUtil;
 import com.github.jajanjawa.juwet.wire.Action;
 import com.github.jajanjawa.juwet.wire.Exception;
 import com.github.jajanjawa.juwet.wire.Packet;
-import com.github.jajanjawa.juwet.wire.Parameters;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.json.JSONObject;
-
-import java.lang.reflect.Method;
 
 import static com.github.jajanjawa.juwet.util.PacketProperty.*;
 
@@ -29,7 +26,6 @@ public class PacketReader {
 
     private void read() {
         readAction();
-
     }
 
     /**

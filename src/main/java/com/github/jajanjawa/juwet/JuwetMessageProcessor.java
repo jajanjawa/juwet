@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class JuwetProcessor implements JuwetMessageListener {
-    protected final Logger logger = LoggerFactory.getLogger(JuwetProcessor.class);
+public abstract class JuwetMessageProcessor implements JuwetMessageListener {
+    protected final Logger logger = LoggerFactory.getLogger(JuwetMessageProcessor.class);
     protected Map<String, JuwetExecutor> executorMap;
 
-    public JuwetProcessor() {
+    public JuwetMessageProcessor() {
         executorMap = new HashMap<String, JuwetExecutor>();
     }
 
@@ -25,5 +25,7 @@ public abstract class JuwetProcessor implements JuwetMessageListener {
         JuwetExecutor executor = new JuwetExecutor(module);
         executorMap.put(name, executor);
     }
+
+
 
 }

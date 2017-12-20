@@ -3,23 +3,20 @@ package com.github.jajanjawa.juwet;
 import com.github.jajanjawa.juwet.event.JuwetStateListener;
 import com.github.jajanjawa.juwet.util.ExceptionHandler;
 import com.github.jajanjawa.juwet.util.IdGenerator;
-import com.github.jajanjawa.juwet.util.JuwetClientProcessor;
+import com.github.jajanjawa.juwet.util.JuwetClientMessageProcessor;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 
 public class Juwet {
 
-    private final Logger logger = LoggerFactory.getLogger(Juwet.class);
     private final JuwetConnection outputConnection;
     private final String clientId;
     private final JuwetConnection inputConnection;
     private final Socket socket;
-    private final JuwetClientProcessor clientListener;
+    private final JuwetClientMessageProcessor clientListener;
     private final HashMap<String, ExceptionHandler> exceptionHandlers;
 
     /**
@@ -33,7 +30,7 @@ public class Juwet {
 
         clientId = IdGenerator.generate();
 
-        clientListener = new JuwetClientProcessor(this, clientId);
+        clientListener = new JuwetClientMessageProcessor(this, clientId);
 
         exceptionHandlers = new HashMap<String, ExceptionHandler>();
 
@@ -51,6 +48,7 @@ public class Juwet {
             }
         };
         socket.on(Socket.EVENT_CONNECT, connect);
+
 
         socket.off(Socket.EVENT_DISCONNECT);
         Emitter.Listener disconnect = new Emitter.Listener() {
@@ -84,6 +82,7 @@ public class Juwet {
 
     /**
      * Koneksi milik klien
+     *
      * @return koneksi untuk terima pesan dari server
      */
     public JuwetConnection getInputConnection() {
@@ -91,14 +90,14 @@ public class Juwet {
     }
 
 
-
     /**
-     * @param <T>  class dari api
-     * @param name nama modul
-     * @param api  interface api
+     * @param <T>      class dari api
+     * @param name     nama modul
+     * @param api      interface api
      * @param listener penerima pesan
      * @return proxy dari class api yang diberikan
      */
+    @SuppressWarnings("unchecked")
     public <T> T create(String name, Class<T> api, Object listener) {
         Class[] interfaces = {api};
 
@@ -110,6 +109,7 @@ public class Juwet {
 
     /**
      * Pindah room
+     *
      * @param room room baru untuk klien
      */
     public void migrate(String room) {
@@ -117,7 +117,7 @@ public class Juwet {
         inputConnection.listen();
     }
 
-    public void handleException(Class<? extends  Exception> e, ExceptionHandler handler) {
+    public void handleException(Class<? extends Exception> e, ExceptionHandler handler) {
         exceptionHandlers.put(e.getName(), handler);
     }
 

@@ -4,5 +4,5 @@ import com.github.jajanjawa.juwet.io.PacketReader;
 
 public interface JuwetMessageListener {
 
-    public void received(PacketReader reader);
+    void received(PacketReader reader);
 }

@@ -1,8 +1,6 @@
 package com.github.jajanjawa.juwet;
 
 import com.github.jajanjawa.juwet.util.JsonUtil;
-import com.github.jajanjawa.juwet.wire.Action;
-import com.github.jajanjawa.juwet.wire.Parameters;
 import com.google.gson.JsonArray;
 
 import java.lang.reflect.Method;
@@ -20,7 +18,7 @@ public class JuwetExecutor {
 
     public JuwetExecutor(Object owner) {
         this.owner = owner;
-        methodMap = new HashMap<String, Method>();
+        methodMap = new HashMap<>();
 
         mapMethod(owner.getClass());
     }
@@ -31,7 +29,7 @@ public class JuwetExecutor {
         }
     }
 
-    private Method getMethod(String name) throws NoSuchMethodException {
+    public Method getMethod(String name) throws NoSuchMethodException {
         Method method = methodMap.get(name);
         if (method == null) {
             throw new NoSuchMethodException("tidak menemukan method: " + method);
@@ -63,7 +61,6 @@ public class JuwetExecutor {
     public Object run(String method, JsonArray parameters) throws Exception {
         Method m = getMethod(method);
         Object[] args = createParameters(m, parameters);
-
 
         return m.invoke(owner, args);
     }

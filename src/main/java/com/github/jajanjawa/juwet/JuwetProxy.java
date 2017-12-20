@@ -16,7 +16,7 @@ public class JuwetProxy implements InvocationHandler {
     private String module;
 
     /**
-     * @param juwet juwet objek
+     * @param juwet  juwet objek
      * @param module nama modul
      */
     JuwetProxy(Juwet juwet, String module) {
@@ -40,7 +40,7 @@ public class JuwetProxy implements InvocationHandler {
         message.setRoom(juwet.getInputConnection().getId());
 
         outputConnection.send(packet);
-        logger.debug("kirim paket: {}",packet.toString());
+        logger.debug("kirim paket: {}", packet.toString());
 
         return null;
     }

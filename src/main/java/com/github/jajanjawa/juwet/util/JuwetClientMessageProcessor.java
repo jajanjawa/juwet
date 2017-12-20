@@ -3,21 +3,18 @@ package com.github.jajanjawa.juwet.util;
 import com.github.jajanjawa.juwet.Juwet;
 import com.github.jajanjawa.juwet.JuwetConnection;
 import com.github.jajanjawa.juwet.JuwetExecutor;
-import com.github.jajanjawa.juwet.JuwetProcessor;
+import com.github.jajanjawa.juwet.JuwetMessageProcessor;
 import com.github.jajanjawa.juwet.io.PacketReader;
-import com.github.jajanjawa.juwet.wire.Action;
 import com.github.jajanjawa.juwet.wire.Exception;
-
-import java.lang.reflect.Method;
 
 /**
  * Mendengarkan pesan dari server.
  */
-public class JuwetClientProcessor extends JuwetProcessor {
+public class JuwetClientMessageProcessor extends JuwetMessageProcessor {
     private final Juwet juwet;
     private final String clientId;
 
-    public JuwetClientProcessor(Juwet juwet, String clientId) {
+    public JuwetClientMessageProcessor(Juwet juwet, String clientId) {
         this.juwet = juwet;
         this.clientId = clientId;
 

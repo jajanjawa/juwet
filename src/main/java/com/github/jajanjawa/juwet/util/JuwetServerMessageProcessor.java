@@ -2,7 +2,7 @@ package com.github.jajanjawa.juwet.util;
 
 import com.github.jajanjawa.juwet.JuwetConnection;
 import com.github.jajanjawa.juwet.JuwetExecutor;
-import com.github.jajanjawa.juwet.JuwetProcessor;
+import com.github.jajanjawa.juwet.JuwetMessageProcessor;
 import com.github.jajanjawa.juwet.JuwetService;
 import com.github.jajanjawa.juwet.io.PacketReader;
 import com.github.jajanjawa.juwet.wire.Action;
@@ -13,11 +13,11 @@ import com.github.jajanjawa.juwet.wire.Packet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JuwetServerProcessor extends JuwetProcessor {
+public class JuwetServerMessageProcessor extends JuwetMessageProcessor {
 
     private final JuwetConnection connection;
 
-    public JuwetServerProcessor(JuwetService service, JuwetConnection connection) {
+    public JuwetServerMessageProcessor(JuwetService service, JuwetConnection connection) {
         this.connection = connection;
         connection.addMessageListener(this);
         connection.listen();
@@ -69,6 +69,14 @@ public class JuwetServerProcessor extends JuwetProcessor {
         return executor;
     }
 
+    private void executeMethod(String module, PacketReader reader) throws java.lang.Exception {
+        JuwetExecutor executor = getExecutor(module);
+        Object result = executor.run(reader.getMethod(), reader.getParameters());
+        if (result != null) {
+            sendActionResult(result, reader);
+        }
+    }
+
     @Override
     public void received(PacketReader reader) {
         String client = reader.getClient();
@@ -78,6 +86,7 @@ public class JuwetServerProcessor extends JuwetProcessor {
 
         try {
             JuwetExecutor executor = getExecutor(module);
+
             Object result = executor.run(reader.getMethod(), reader.getParameters());
             if (result != null) {
                 sendActionResult(result, reader);
