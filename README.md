@@ -1,4 +1,4 @@
-[![Release](https://jitpack.io/v/jajanjawa/jnowdb.svg)](https://jitpack.io/#jajanjawa/jnowdb)
+[![Release](https://jitpack.io/v/jajanjawa/juwet.svg)](https://jitpack.io/#jajanjawa/juwet)
 
 ### Apa ini
 RPC diatas [NowDB Relay](http://nowdb.net)
